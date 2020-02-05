@@ -14,6 +14,7 @@ def hello():
 
 @app.route('/multi/<int:num>', methods=['GET'])
 def get_multiply10(num):
+    print('Why is this shit confusing??')
     return jsonify({"result": num * 10})
 
 

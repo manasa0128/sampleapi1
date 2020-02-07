@@ -42,9 +42,6 @@ def samplemail():
         recipients=["16211a0543@bvrit.ac.in"],
         body="This is a test email I sent with Gmail and Python!")
     mymail.send(msg)
-    if __name__ == '__main__':
-         app.run()
-    # message sent confirmation
     return "Your mail has been sent!"
 
 

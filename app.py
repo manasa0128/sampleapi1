@@ -1,11 +1,41 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+@app.route("/")
+def index():
+    print('are you even correct?')
+    return render_template("index.html")
+
+
+app.config.update(
+    DEBUG=True,
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=465,
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME='manasadvr@gmail.com',
+    MAIL_PASSWORD='Magical@289',
+)
+mail = Mail(app)
+
+
+@app.route('/test_path')
+def test_path():
+    return 'test_path'
+
+
+@app.route('/send-mail')
+def send_mail():
+    try:
+        msg = Message("This is an email that is being sent through flask application", sender="manasadvr@gmail.com",
+                      recipients=["manasadvr@gmail.com"])
+        msg.body = "Yo! This is crazy"
+        mail.send(msg)
+        return "mail sent succesfully"
+    except Exception as e:
+        return str(e)
 
 
 @app.route('/hello', methods=['GET', 'POST'])

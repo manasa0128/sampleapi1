@@ -1,5 +1,7 @@
 import os
+from email import message
 
+from alembic.util import msg
 from flask import Flask, request, jsonify, render_template
 from flask_mail import Mail, Message
 
@@ -43,6 +45,17 @@ def samplemail():
         body="This is a test email I sent with Gmail and Python!")
     mymail.send(msg)
     return "Your mail has been sent!"
+
+@app.route('/send_email_anyone', methods=['POST'])
+def send_email_anyone():
+    print(request.method)
+    data= request.get_json()
+    print(data['recepients'])
+    msg = Message("Hello", sender=data['sender'], recipients=[data['recepients']])
+    msg.subject = data['subject']
+    msg.body = data['body']
+    mymail.send(msg)
+    return jsonify({'you sent': data}), 201
 
 
 if __name__ == '__main__':
